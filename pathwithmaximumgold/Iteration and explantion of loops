@@ -1,0 +1,122 @@
+Sure, let's break down the `DFS` function with a detailed example to understand how it calculates and returns the total amount of gold collected.
+
+### Example Grid
+Consider the following grid:
+```
+1 3 3
+0 2 0
+3 0 1
+```
+
+### `getMaximumGold` Function
+The `getMaximumGold` function initializes the search and iterates over each cell to start the DFS search.
+
+### Step-by-Step Execution
+
+#### Initial Call from `getMaximumGold`
+- Start at cell `(0,0)` with value `1`.
+
+#### First Call to `DFS(grid, 0, 0)`
+1. **Check base case:** Cell `(0,0)` is within bounds and has gold (`grid[0][0] == 1`).
+2. **Save original gold value:** `originalGoldValue = 1`.
+3. **Mark cell as visited:** `grid[0][0] = 0`.
+4. **Initialize `maxGold` to 0.**
+
+5. **Explore all four directions:**
+
+    - **Up** (`i-1`, `j`): `DFS(grid, -1, 0)`
+      - Out of bounds, returns `0`.
+
+    - **Down** (`i+1`, `j`): `DFS(grid, 1, 0)`
+      - Cell `(1,0)` has no gold, returns `0`.
+
+    - **Right** (`i`, `j+1`): `DFS(grid, 0, 1)`
+      
+      #### Second Call to `DFS(grid, 0, 1)`
+      1. **Check base case:** Cell `(0,1)` is within bounds and has gold (`grid[0][1] == 3`).
+      2. **Save original gold value:** `originalGoldValue = 3`.
+      3. **Mark cell as visited:** `grid[0][1] = 0`.
+      4. **Initialize `maxGold` to 0.**
+
+      5. **Explore all four directions:**
+
+          - **Up** (`i-1`, `j`): `DFS(grid, -1, 1)`
+            - Out of bounds, returns `0`.
+
+          - **Down** (`i+1`, `j`): `DFS(grid, 1, 1)`
+
+            #### Third Call to `DFS(grid, 1, 1)`
+            1. **Check base case:** Cell `(1,1)` is within bounds and has gold (`grid[1][1] == 2`).
+            2. **Save original gold value:** `originalGoldValue = 2`.
+            3. **Mark cell as visited:** `grid[1][1] = 0`.
+            4. **Initialize `maxGold` to 0.**
+
+            5. **Explore all four directions:**
+
+                - **Up** (`i-1`, `j`): `DFS(grid, 0, 1)`
+                  - Already visited, returns `0`.
+
+                - **Down** (`i+1`, `j`): `DFS(grid, 2, 1)`
+                  - Cell `(2,1)` has no gold, returns `0`.
+
+                - **Right** (`i`, `j+1`): `DFS(grid, 1, 2)`
+                  - Cell `(1,2)` has no gold, returns `0`.
+
+                - **Left** (`i`, `j-1`): `DFS(grid, 1, 0)`
+                  - Cell `(1,0)` has no gold, returns `0`.
+
+            6. **Restore original gold value:** `grid[1][1] = 2`.
+            7. **Return total gold:** `originalGoldValue (2) + maxGold (0) = 2`.
+
+          - **Update `maxGold` in the second call:** `maxGold = max(0, 2) = 2`.
+
+          - **Right** (`i`, `j+1`): `DFS(grid, 0, 2)`
+
+            #### Fourth Call to `DFS(grid, 0, 2)`
+            1. **Check base case:** Cell `(0,2)` is within bounds and has gold (`grid[0][2] == 3`).
+            2. **Save original gold value:** `originalGoldValue = 3`.
+            3. **Mark cell as visited:** `grid[0][2] = 0`.
+            4. **Initialize `maxGold` to 0.**
+
+            5. **Explore all four directions:**
+
+                - **Up** (`i-1`, `j`): `DFS(grid, -1, 2)`
+                  - Out of bounds, returns `0`.
+
+                - **Down** (`i+1`, `j`): `DFS(grid, 1, 2)`
+                  - Cell `(1,2)` has no gold, returns `0`.
+
+                - **Right** (`i`, `j+1`): `DFS(grid, 0, 3)`
+                  - Out of bounds, returns `0`.
+
+                - **Left** (`i`, `j-1`): `DFS(grid, 0, 1)`
+                  - Already visited, returns `0`.
+
+            6. **Restore original gold value:** `grid[0][2] = 3`.
+            7. **Return total gold:** `originalGoldValue (3) + maxGold (0) = 3`.
+
+          - **Update `maxGold` in the second call:** `maxGold = max(2, 3) = 3`.
+
+          - **Left** (`i`, `j-1`): `DFS(grid, 0, 0)`
+            - Already visited, returns `0`.
+
+      6. **Restore original gold value:** `grid[0][1] = 3`.
+      7. **Return total gold:** `originalGoldValue (3) + maxGold (3) = 6`.
+
+    - **Update `maxGold` in the first call:** `maxGold = max(0, 6) = 6`.
+
+    - **Left** (`i`, `j-1`): `DFS(grid, 0, -1)`
+      - Out of bounds, returns `0`.
+
+6. **Restore original gold value:** `grid[0][0] = 1`.
+7. **Return total gold:** `originalGoldValue (1) + maxGold (6) = 7`.
+
+### Summary
+The first DFS call starting from `(0,0)` will return `7`, which is the total gold collected following the best path `(0,0) -> (0,1) -> (1,1) -> (0,2)`, yielding `1 + 3 + 2 + 3 = 7`.
+
+The `getMaximumGold` function will then repeat this process for each cell, keeping track of the maximum gold collected from any starting cell.
+
+### Conclusion
+The `DFS` function effectively explores all possible paths from a starting cell, ensuring no cell is revisited in the same path. It collects the maximum amount of gold by recursively visiting neighboring cells and summing up the gold collected. The total gold returned by each `DFS` call is the sum of the current cell's gold and the maximum gold collected from all possible paths starting from that cell.
+
+
